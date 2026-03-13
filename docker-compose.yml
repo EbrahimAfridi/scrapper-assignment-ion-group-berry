@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: kkr-mongodb
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb_data:/data/db
+
+  app:
+    build: .
+    container_name: kkr-app
+    ports:
+      - '3000:3000'
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/kkr-portfolio
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb_data:
