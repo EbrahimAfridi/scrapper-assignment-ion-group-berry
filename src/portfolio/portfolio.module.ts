@@ -4,6 +4,8 @@ import {
   PortfolioCompany,
   PortfolioCompanySchema,
 } from './schemas/portfolio-company.schema';
+import { PortfolioService } from './portfolio.service';
+import { PortfolioController } from './portfolio.controller';
 
 @Module({
   imports: [
@@ -11,8 +13,8 @@ import {
       { name: PortfolioCompany.name, schema: PortfolioCompanySchema },
     ]),
   ],
-  providers: [],
-  controllers: [],
-  exports: [],
+  providers: [PortfolioService],
+  controllers: [PortfolioController],
+  exports: [PortfolioService], // exported so ScraperModule can use it
 })
 export class PortfolioModule {}
