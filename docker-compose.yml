@@ -1,4 +1,4 @@
-version: '3.8'
+# version: '3.8'
 
 services:
   mongodb:
@@ -10,7 +10,8 @@ services:
       - mongodb_data:/data/db
 
   app:
-    build: .
+    # build: .
+    image: ebrahimafridi12/scrapper-assignment-ion:latest
     container_name: kkr-app
     ports:
       - '3000:3000'
