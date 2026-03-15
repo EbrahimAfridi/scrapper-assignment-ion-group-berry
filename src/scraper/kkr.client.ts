@@ -2,25 +2,28 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 
+interface KkrPageResponse {
+  success: boolean;
+  hits: number;
+  pages: number;
+  startNumber: number;
+  endNumber: number;
+  results: Record<string, unknown>[];
+}
+
 @Injectable()
 export class KkrClient {
   private readonly logger = new Logger(KkrClient.name);
   private readonly baseUrl: string;
 
   constructor(private readonly configService: ConfigService) {
-    const baseUrl = this.configService.get<string>('KKR_BASE_URL');
-    if (!baseUrl) {
-      throw new Error('KKR_BASE_URL is not defined in configuration');
-    }
-    this.baseUrl = baseUrl;
+    this.baseUrl = this.configService.get<string>('KKR_BASE_URL') ?? '';
   }
 
-  async fetchPage(
-    page: number,
-  ): Promise<{ results: any[]; pages: number; hits: number }> {
+  async fetchPage(page: number): Promise<KkrPageResponse> {
     const url = `${this.baseUrl}/content/kkr/sites/global/en/invest/portfolio/jcr:content/root/main-par/bioportfoliosearch.bioportfoliosearch.json`;
 
-    const response = await axios.get(url, {
+    const response = await axios.get<KkrPageResponse>(url, {
       params: {
         page,
         sortParameter: 'name',

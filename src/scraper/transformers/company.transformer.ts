@@ -2,7 +2,22 @@ import { CreatePortfolioCompanyDto } from '../../portfolio/dto/create-portfolio-
 import { stripHtml } from 'string-strip-html';
 import slugify from 'slugify';
 
-export function transformCompany(raw: any): CreatePortfolioCompanyDto {
+interface RawKkrCompany {
+  name: string;
+  sortingName: string;
+  yoi: string | null;
+  assetClass: string | null;
+  industry: string | null;
+  region: string | null;
+  hq: string | null;
+  description: string | null;
+  logo: string | null;
+  url: string | null;
+}
+
+export function transformCompany(
+  raw: RawKkrCompany,
+): CreatePortfolioCompanyDto {
   return {
     slug: slugify(raw.name, { lower: true, strict: true }),
     name: raw.name?.trim() ?? null,
@@ -31,7 +46,7 @@ export function transformCompany(raw: any): CreatePortfolioCompanyDto {
   };
 }
 
-function normalizeUrl(url: string): string | null {
+function normalizeUrl(url: string | null): string | null {
   if (!url || url.trim() === '') return null;
   const trimmed = url.trim();
   if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
