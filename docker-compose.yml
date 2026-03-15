@@ -16,6 +16,9 @@ services:
       - '3000:3000'
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/kkr-portfolio
+      - KKR_BASE_URL=https://www.kkr.com
+      - SCRAPER_DELAY_MS=1000
+      - PORT=3000
     depends_on:
       - mongodb
 
