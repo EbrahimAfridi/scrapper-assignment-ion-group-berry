@@ -2,7 +2,7 @@ import { CreatePortfolioCompanyDto } from '../../portfolio/dto/create-portfolio-
 import { stripHtml } from 'string-strip-html';
 import slugify from 'slugify';
 
-interface RawKkrCompany {
+export interface RawKkrCompany {
   name: string;
   sortingName: string;
   yoi: string | null;

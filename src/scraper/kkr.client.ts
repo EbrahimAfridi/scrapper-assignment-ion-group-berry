@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
+import { RawKkrCompany } from './transformers/company.transformer';
 
 interface KkrPageResponse {
   success: boolean;
@@ -8,7 +9,7 @@ interface KkrPageResponse {
   pages: number;
   startNumber: number;
   endNumber: number;
-  results: Record<string, unknown>[];
+  results: RawKkrCompany[];
 }
 
 @Injectable()
